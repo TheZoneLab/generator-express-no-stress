@@ -20,6 +20,7 @@ module.exports = class extends Generator {
     this.description = 'My cool app'
     this.version = '1.0.0'
     this.apiRoot = '/api/v1'
+    this.serverPort = 3000
   }
 
   initializing() {
@@ -34,6 +35,10 @@ module.exports = class extends Generator {
       type: 'input',
       name: 'apiRoot',
       message: `API Root [${this.apiRoot}]`
+    },{
+      type: 'input',
+      name: 'serverPort',
+      message: `Server port [${this.serverPort}]`
     },{
       type: 'input',
       name: 'apiVersion',
@@ -80,18 +85,10 @@ module.exports = class extends Generator {
           'public/api-explorer/swagger-ui-standalone-preset.js',
           'public/index.html'
         ]
-
-        const copyOpts = this.docker 
-          ? null 
-          : { 
-          globOptions: {
-            ignore: '**/+(Dockerfile|.dockerignore)'
-          }
-        }
-        this.fs.copy(src, dest, copyOpts)
+        this.fs.copy(src, dest)
         this.fs.copy(
           this.templatePath('.*'),
-          dest, copyOpts
+          dest
         )
 
         const opts = {
@@ -99,6 +96,7 @@ module.exports = class extends Generator {
             title: this.name,
             description: this.description,
             version: this.version,
+            serverPort: this.serverPort,
             apiRoot: this.apiRoot
         }
 

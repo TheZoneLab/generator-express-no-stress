@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "node build.js && backpack build",
     "lint": "eslint -c .eslintrc.json --ext .js ./test ./server",
-    "start": "cd build && node main",
+    "start": "cd build && node main | pino-socket -a $LOGGING_HOST -p $LOGGING_PORT -m tcp",
     "start:dev": "node build.js && backpack dev | pino -o 'short'",
     "start:debug": "node build.js && backpack dev --inspect-brk | pino -o 'short'",
     "test": "node build.js && _mocha --compilers js:babel-register --exit"
@@ -17,6 +17,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "pino": "^4.7.3",
+    "pino-socket": "^1.0.1",
     "source-map-support": "^0.4.15",
     "swagger-express-middleware": "^1.0.0-alpha.12"
   },
@@ -33,5 +34,8 @@
     "shelljs": "^0.7.8",
     "supertest": "^3.0.0"
   },
-  "author": "Carmine DiMascio <cdimascio@gmail.com> (https://github.com/cdimascio)"
+  "author": "David COHEN <dcohen@xyz.zone> @ LaZone iA",
+  "engines": {
+    "node": "8.9"
+  }
 }

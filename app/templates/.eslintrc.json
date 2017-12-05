@@ -12,11 +12,12 @@
     "semi": [2, "never"],
     "no-underscore-dangle": 0,
     "class-methods-use-this": ["off"],
-    "no-use-before-define": ["error", { 
-      "functions": false, 
-      "classes": false 
+    "import/no-extraneous-dependencies": ["error", {"packageDir": "./server/"}],
+    "no-use-before-define": ["error", {
+      "functions": false,
+      "classes": false
     }],
-    "arrow-parens": ["error", "as-needed", {
+    "arrow-parens": [0, "as-needed", {
       "requireForBlockBody": false
     }]
   }

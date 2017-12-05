@@ -2,12 +2,16 @@ import Express from 'express'
 import * as path from 'path'
 import * as bodyParser from 'body-parser'
 import * as http from 'http'
-import * as os from 'os'
 import cookieParser from 'cookie-parser'
 import swaggerify from './swagger'
-import l from './logger'
+import log from './logger'
 
 const app = new Express()
+const {
+  PORT,
+  NODE_ENV,
+  SESSION_SECRET,
+} = process.env
 
 export default class ExpressServer {
   constructor() {
@@ -15,7 +19,7 @@ export default class ExpressServer {
     app.set('appPath', `${root}client`)
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(cookieParser(process.env.SESSION_SECRET))
+    app.use(cookieParser(SESSION_SECRET))
     app.use(Express.static(`${root}/public`))
   }
 
@@ -24,9 +28,10 @@ export default class ExpressServer {
     return this
   }
 
-  listen(port = process.env.PORT) {
-    const welcome = p => () => l.info(`up and running in ${process.env.NODE_ENV || 'development'} @: ${os.hostname()} on port: ${p}}`)
-    http.createServer(app).listen(port, welcome(port))
+  listen(port = PORT) {
+    http.createServer(app).listen(port, () => {
+      log.info(`Up and running in '${NODE_ENV}' on port: ${PORT}`)
+    })
     return app
   }
 }
