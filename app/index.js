@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-const Generator = require('yeoman-generator');
-const path = require('path');
+const Generator = require('yeoman-generator')
+const path = require('path')
 
 module.exports = class extends Generator {
   constructor(args, opts) {
-    super(args, opts);
-    this.argument('appname', { type: String, required: false });
+    super(args, opts)
+    this.argument('appname', { type: String, required: false })
     this.option('yarn', {
       description: 'Use Yarn as the package manager'
-    });
+    })
     this.option('docker', {
       description: 'Install Docker artifacts including a Dockerfile'
-    });
+    })
 
-    this.useYarn = this.options.yarn;
-    this.docker = this.options.docker;
-    this.name = this.options.appname || 'myapp';
+    this.useYarn = this.options.yarn
+    this.docker = this.options.docker
+    this.name = this.options.appname || 'myapp'
     this.description = 'My cool app'
     this.version = '1.0.0'
     this.apiRoot = '/api/v1'
@@ -38,7 +38,7 @@ module.exports = class extends Generator {
       type: 'input',
       name: 'apiVersion',
       message: `Version [${this.version}]`
-    }];
+    }]
 
     if (!this.options.appname) {
       prompts.unshift({
@@ -50,11 +50,11 @@ module.exports = class extends Generator {
 
     return this.prompt(prompts)
       .then(r => {
-        this.name = r.name ? r.name : this.name;
-        this.description = r.description ? r.description : this.description;
-        this.version = r.version ? r.version : this.version;
-        this.apiRoot = r.apiRoot ? r.apiRoot : this.apiRoot;
-      });
+        this.name = r.name ? r.name : this.name
+        this.description = r.description ? r.description : this.description
+        this.version = r.version ? r.version : this.version
+        this.apiRoot = r.apiRoot ? r.apiRoot : this.apiRoot
+      })
   }
 
   configuring() {
@@ -79,7 +79,7 @@ module.exports = class extends Generator {
           'public/api-explorer/index.html',
           'public/api-explorer/swagger-ui-standalone-preset.js',
           'public/index.html'
-        ];
+        ]
 
         const copyOpts = this.docker 
           ? null 
@@ -87,12 +87,12 @@ module.exports = class extends Generator {
           globOptions: {
             ignore: '**/+(Dockerfile|.dockerignore)'
           }
-        };
+        }
         this.fs.copy(src, dest, copyOpts)
         this.fs.copy(
           this.templatePath('.*'),
           dest, copyOpts
-        );
+        )
 
         const opts = {
             name: this.name,
@@ -105,8 +105,8 @@ module.exports = class extends Generator {
         files.forEach(f => {
           this.fs.copyTpl(
             this.templatePath(f),
-            this.destinationPath(`${this.name}/${f}`), opts);
-        });
+            this.destinationPath(`${this.name}/${f}`), opts)
+        })
       }
     }
   }
@@ -115,12 +115,12 @@ module.exports = class extends Generator {
   }
 
   install() {
-    const appDir = path.join(process.cwd(), this.name);
-    process.chdir(appDir);
+    const appDir = path.join(process.cwd(), this.name)
+    process.chdir(appDir)
     if (this.useYarn) {
-      this.yarnInstall();
+      this.yarnInstall()
     } else {
-      this.npmInstall();
+      this.npmInstall()
     }
   }
 
