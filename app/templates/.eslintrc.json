@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "mocha"
+  ],
   "extends": "airbnb-base",
   "parser": "babel-eslint",
   "parserOptions": {
@@ -6,6 +9,7 @@
     "allowImportExportEverywhere": false
   },
   "rules": {
+    "semi": [2, "never"],
     "no-underscore-dangle": 0,
     "class-methods-use-this": ["off"],
     "no-use-before-define": ["error", { 

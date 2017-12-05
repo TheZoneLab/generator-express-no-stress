@@ -1,8 +1,10 @@
-import chai from 'chai';
-import request from 'supertest';
-import Server from '../server';
+/* eslint-env mocha */
 
-const expect = chai.expect;
+import chai from 'chai'
+import request from 'supertest'
+import Server from '../server'
+
+const expect = chai.expect
 
 describe('Examples', () => {
   it('should get all examples', () =>
@@ -12,8 +14,8 @@ describe('Examples', () => {
       .then(r => {
         expect(r.body)
           .to.be.an.an('array')
-          .of.length(2);
-      }));
+          .of.length(2)
+      }))
 
   it('should add a new example', () =>
     request(Server)
@@ -24,8 +26,8 @@ describe('Examples', () => {
         expect(r.body)
           .to.be.an.an('object')
           .that.has.property('name')
-          .equal('test');
-      }));
+          .equal('test')
+      }))
 
   it('should get an example by id', () =>
     request(Server)
@@ -35,6 +37,6 @@ describe('Examples', () => {
         expect(r.body)
           .to.be.an.an('object')
           .that.has.property('name')
-          .equal('test');
-      }));
-});
+          .equal('test')
+      }))
+})

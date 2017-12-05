@@ -4,12 +4,12 @@
   "description": "My cool app",
   "main": "index.js",
   "scripts": {
-    "start": "cd build && node main",
     "compile": "node build.js && backpack build",
-    "dev": "node build.js && backpack dev | pino -o 'short'",
-    "debug": "node build.js && backpack dev --inspect-brk | pino -o 'short'",    
+    "lint": "eslint -c .eslintrc.json --ext .js ./test ./server",
+    "start": "cd build && node main",
+    "start:dev": "node build.js && backpack dev | pino -o 'short'",
+    "start:debug": "node build.js && backpack dev --inspect-brk | pino -o 'short'",
     "test": "node build.js && _mocha --compilers js:babel-register --exit"
-    
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -28,6 +28,7 @@
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-mocha": "^4.11.0",
     "mocha": "^4.0.1",
     "shelljs": "^0.7.8",
     "supertest": "^3.0.0"
