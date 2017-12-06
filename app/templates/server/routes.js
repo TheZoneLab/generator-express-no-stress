@@ -1,5 +1,5 @@
-import examplesRouter from './api/controllers/examples/router'
+const examplesRouter = require('./api/controllers/examples/router')
 
-export default function routes(app) {
+module.exports = function routes (app) {
   app.use('<%= apiRoot %>/examples', examplesRouter)
 }

@@ -1,15 +1,14 @@
 {
-  "name": "myapp",
-  "version": "1.0.0",
-  "description": "My cool app",
-  "main": "index.js",
+  "name": "<%= name %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "main": "./server/index.js",
   "scripts": {
-    "compile": "node build.js && backpack build",
-    "lint": "eslint -c .eslintrc.json --ext .js ./test ./server",
-    "start": "cd build && node main | pino-socket -a $LOGGING_HOST -p $LOGGING_PORT -m tcp",
-    "start:dev": "node build.js && backpack dev | pino -o 'short'",
-    "start:debug": "node build.js && backpack dev --inspect-brk | pino -o 'short'",
-    "test": "node build.js && _mocha --compilers js:babel-register --exit"
+    "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc.json --ext .js ./test ./server",
+    "start": "node server | pino-socket -a $LOGGING_HOST -p $LOGGING_PORT -m tcp | pino",
+    "start:dev": "nodemon server | node tools/logger-dev-transport.js",
+    "start:debug": "node debug server | node tools/logger-dev-transport.js",
+    "test": "mocha --exit"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -22,17 +21,17 @@
     "swagger-express-middleware": "^1.0.0-alpha.12"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "babel-preset-env": "^1.6.1",
-    "backpack-core": "^0.4.3",
     "chai": "^4.1.2",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-mocha": "^4.11.0",
     "mocha": "^4.0.1",
-    "shelljs": "^0.7.8",
-    "supertest": "^3.0.0"
+    "nodemon": "^1.12.5",
+    "pump": "^2.0.0",
+    "split2": "^2.2.0",
+    "supertest": "^3.0.0",
+    "through2": "^2.0.3"
   },
   "author": "David COHEN <dcohen@xyz.zone> @ LaZone iA",
   "engines": {

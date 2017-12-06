@@ -1,16 +1,16 @@
-import pino from 'pino'
+const pino = require('pino')
 
 const {
   APP_ID,
   LOG_LEVEL,
   NODE_ENV,
-} = process.env
+} = require('./env')
 
-const logger = (name) => pino({
-  name,
+const pinoInstance = pino({
+  name: APP_ID,
   level: LOG_LEVEL,
-  prettyPrint: (NODE_ENV === 'development'),
   timestamp: (NODE_ENV !== 'development'),
+  messageKey: 'message',
   base: {
     hostname: null,
     project: APP_ID,
@@ -18,4 +18,4 @@ const logger = (name) => pino({
   },
 })
 
-export default logger
+module.exports = (module) => pinoInstance.child({ module })

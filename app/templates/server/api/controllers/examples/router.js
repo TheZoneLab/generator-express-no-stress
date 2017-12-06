@@ -1,7 +1,7 @@
-import * as express from 'express'
-import controller from './controller'
+const express = require('express')
+const controller = require('./controller')
 
-export default express
+module.exports = express
   .Router()
   .post('/', controller.create)
   .get('/', controller.all)

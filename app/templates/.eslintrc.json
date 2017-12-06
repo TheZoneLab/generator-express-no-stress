@@ -3,7 +3,6 @@
     "mocha"
   ],
   "extends": "airbnb-base",
-  "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
     "allowImportExportEverywhere": false
@@ -12,7 +11,8 @@
     "semi": [2, "never"],
     "no-underscore-dangle": 0,
     "class-methods-use-this": ["off"],
-    "import/no-extraneous-dependencies": ["error", {"packageDir": "./server/"}],
+    "import/no-extraneous-dependencies": ["error"],
+    "space-before-function-paren": [2, "always"],
     "no-use-before-define": ["error", {
       "functions": false,
       "classes": false

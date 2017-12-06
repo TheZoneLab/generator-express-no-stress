@@ -1,10 +1,9 @@
 /* eslint-env mocha */
 
-import chai from 'chai'
-import request from 'supertest'
-import Server from '../server'
+const request = require('supertest')
+const Server = require('../server')
 
-const expect = chai.expect
+const { assert } = require('chai')
 
 describe('Examples', () => {
   it('should get all examples', () =>
@@ -12,21 +11,19 @@ describe('Examples', () => {
       .get('<%= apiRoot %>/examples')
       .expect('Content-Type', /json/)
       .then(r => {
-        expect(r.body)
-          .to.be.an.an('array')
-          .of.length(2)
+        assert.isArray(r.body)
+        assert.lengthOf(r.body, 2)
       }))
 
   it('should add a new example', () =>
     request(Server)
       .post('<%= apiRoot %>/examples')
-      .send({ name: 'test' })
+      .send({ title: 'hello world', author: 'human' })
       .expect('Content-Type', /json/)
       .then(r => {
-        expect(r.body)
-          .to.be.an.an('object')
-          .that.has.property('name')
-          .equal('test')
+        assert.isObject(r.body)
+        assert.propertyVal(r.body, 'title', 'hello world')
+        assert.propertyVal(r.body, 'author', 'human')
       }))
 
   it('should get an example by id', () =>
@@ -34,9 +31,8 @@ describe('Examples', () => {
       .get('<%= apiRoot %>/examples/2')
       .expect('Content-Type', /json/)
       .then(r => {
-        expect(r.body)
-          .to.be.an.an('object')
-          .that.has.property('name')
-          .equal('test')
+        assert.isObject(r.body)
+        assert.property(r.body, 'title')
+        assert.property(r.body, 'author')
       }))
 })

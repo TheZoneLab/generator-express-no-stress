@@ -1,27 +1,46 @@
-import ExamplesService from '../../services/examples.service'
+const MOCK = {
+  books: [
+    {
+      id: 1,
+      title: 'Why did I kill my cat ?',
+      author: 'Steven HARVEY',
+    },
+    {
+      id: 2,
+      title: 'How to resurect someone\'s cat...',
+      author: 'Jordan GARNIER',
+    },
+  ],
+  nextId: 3,
+}
 
-export class Controller {
-  all(req, res) {
-    ExamplesService.all()
+module.exports = {
+  all (req, res) {
+    Promise.resolve(MOCK.books)
       .then(r => res.json(r))
-  }
+  },
 
-  byId(req, res) {
-    ExamplesService
-      .byId(req.params.id)
+  byId (req, res) {
+    const book = MOCK.books.find((b) => b.id === parseInt(req.params.id, 10))
+    Promise.resolve(book)
       .then(r => {
         if (r) res.json(r)
         else res.status(404).end()
       })
-  }
+  },
 
-  create(req, res) {
-    ExamplesService
-      .create(req.body.name)
-      .then(r => res
+  create (req, res) {
+    const newBook = {
+      id: MOCK.nextId,
+      title: req.body.title,
+      author: req.body.author,
+    }
+    MOCK.nextId += 1
+    MOCK.books.push(newBook)
+    Promise.resolve(newBook)
+      .then(book => res
         .status(201)
-        .location(`/api/v1/examples/${r.id}`)
-        .json(r))
-  }
+        .location(`<%= apiRoot %>/examples/${book.id}`)
+        .json(book))
+  },
 }
-export default new Controller()

@@ -1,20 +1,11 @@
-# generator-express-no-stress
+# generator-express-no-stress *(zone version)*
 
-![](https://img.shields.io/badge/status-stable-green.svg) ![](https://img.shields.io/badge/license-MIT-blue.svg)
-
-Create awesome [Express.js](www.expressjs.com) applications with best of breed tech including ES.next via [Babel.js](https://babeljs.io/), structured logging with [Pino](https://github.com/pinojs/pino), API validation and interactive documentation via [Swagger](http://swagger.io/), environment based config with [dotenv](https://github.com/motdotla/dotenv), linting with [ESLint](http://eslint.org/), and [Backpack](https://github.com/palmerhq/backpack) powered builds. 
-
-![](https://raw.githubusercontent.com/cdimascio/generator-express-no-stress/master/assets/swagger_node.jpeg)
-
-generator-express-no-stress gets you up and running in seconds. It's ridiculously easy to configure. Heck, just take the defaults. Start it. Write code.
-
-This generator scaffolds a fully functioning REST API server complete with interactive documentation, API validation, structured logging, environment driven config, and more. Simply run the generator and smile :-D
-
+> This generator (forked from https://github.com/cdimascio/generator-express-no-stress) is the basic API service that should be used for projects in iA Zone.
 
 ## Install
 *Requires Node 6 or greater*
 
-`npm install -g yo generator-express-no-stress`
+`npm install -g yo git+http://git@github.com:TheZoneLab/generator-express-no-stress.git`
 
 ## Scaffold
 
@@ -25,7 +16,7 @@ This generator scaffolds a fully functioning REST API server complete with inter
 
 ```
 cd myapp
-npm run dev
+npm run start:dev
 ```
 
 #### Run in *production* mode:
@@ -33,13 +24,6 @@ npm run dev
 ```
 npm run compile
 npm start
-```
-
-#### Deploy to the Cloud
-e.g. CloudFoundry
-
-```
-cf push myapp
 ```
 
 ## Test
@@ -50,19 +34,19 @@ npm test
 
 ## Debug
 
-Run `npm run debug` and attach your favourite inspector!
+Run `npm run start:debug` and attach your favourite inspector!
 
 # Try it!
 
-- Interactive API doc at [http://localhost:3000/api-explorer](http://localhost:3000/api-explorer)
-- Landing page at [http://localhost:3000](http://localhost:3000)
+- Interactive API doc at [http://localhost:<PORT>/api-explorer](http://localhost:<PORT>/api-explorer)
+- Landing page at [http://localhost:<PORT>](http://localhost:<PORT>)
 
 
 ## Use Yarn
 
 ```
 # scaffold
-yo express-no-stress myapp --yarn 
+yo express-no-stress myapp --yarn
 
 # start
 cd myapp
@@ -72,14 +56,13 @@ npm start
 ## CLI Options
 
 ```shell
-yo express-no-stress [appname] [--yarn] [--docker]
+yo express-no-stress [appname] [--yarn]
 ```
 
 | Option | default | Description |
 | --- | --- | --- |
 | `appname` | myapp | The application folder |
 | `--yarn` | | Use the [`yarn`](https://yarnpkg.com) package manager, instead of `npm` |
-| `--docker` | | Install [Docker](https://www.docker.com/) artifacts including a Dockerfile |
 
 ## What you get!
 
@@ -113,7 +96,7 @@ Oops! I the API caller forgot to pass a `name` field, no stress, we've got this!
 
 ### Structured Logging
 
-Structured logging out of the box! 
+Structured logging out of the box!
 
 #### raw
 
@@ -182,7 +165,7 @@ paths:
           in: body
           description: number of items to skip
           required: true
-          schema: 
+          schema:
             $ref: "#/definitions/ExampleBody"
       responses:
         200:
@@ -202,7 +185,7 @@ paths:
         200:
           description: Return the example with the specified id
         404:
-          description: Example not 
+          description: Example not
 
   /spec:
     get:
@@ -221,7 +204,3 @@ paths:
 ### Linting
 
 express-no-stress uses [ESLint](http://eslint.org/) with a slightly modified AirBnb [base](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base) configuration. See `.eslintrc.json` to make modifications.
-
-## License
-
-MIT

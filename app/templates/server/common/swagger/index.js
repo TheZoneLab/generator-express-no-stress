@@ -1,8 +1,9 @@
-import middleware from 'swagger-express-middleware'
-import * as path from 'path'
+const middleware = require('swagger-express-middleware')
+const path = require('path')
+const env = require('../env')
 
-export default function (app, routes) {
-  middleware(path.join(__dirname, 'Api.yaml'), app, (err, mw) => {
+module.exports = function setupMiddleware (app) {
+  middleware(path.join(__dirname, 'Api.yml'), app, (err, mw) => {
     // Enable Express' case-sensitive and strict options
     // (so "/entities", "/Entities", and "/Entities/" are all different)
     app.enable('case sensitive routing')
@@ -16,19 +17,19 @@ export default function (app, routes) {
       strict: false,
     }, {
       useBasePath: true,
-      apiPath: process.env.SWAGGER_API_SPEC,
-      // Disable serving the "Api.yaml" file
+      apiPath: env.SWAGGER_API_SPEC,
+      // Disable serving the "Api.yml" file
       // rawFilesPath: false
     }))
 
     app.use(mw.parseRequest({
       // Configure the cookie parser to use secure cookies
       cookie: {
-        secret: process.env.SESSION_SECRET,
+        secret: env.SESSION_SECRET,
       },
       // Don't allow JSON content over 100kb (default is 1mb)
       json: {
-        limit: process.env.REQUEST_LIMIT,
+        limit: env.REQUEST_LIMIT,
       },
     }))
 
@@ -44,7 +45,5 @@ export default function (app, routes) {
         `<h1>${err.status || 500} Error</h1>` +
         `<pre>${err.message}</pre>`)
     })
-
-    routes(app)
   })
 }

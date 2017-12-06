@@ -57,8 +57,9 @@ module.exports = class extends Generator {
       .then(r => {
         this.name = r.name ? r.name : this.name
         this.description = r.description ? r.description : this.description
-        this.version = r.version ? r.version : this.version
+        this.version = r.apiVersion ? r.apiVersion : this.version
         this.apiRoot = r.apiRoot ? r.apiRoot : this.apiRoot
+        this.serverPort = r.serverPort ? r.serverPort : this.serverPort
       })
   }
 
@@ -80,7 +81,7 @@ module.exports = class extends Generator {
           '.env',
           'server/routes.js',
           'test/examples.controller.js',
-          'server/common/swagger/Api.yaml',
+          'server/common/swagger/Api.yml',
           'public/api-explorer/index.html',
           'public/api-explorer/swagger-ui-standalone-preset.js',
           'public/index.html'
